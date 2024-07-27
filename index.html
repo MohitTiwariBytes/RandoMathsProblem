@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Math Question Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .question {
+            font-size: 24px;
+            margin: 20px;
+        }
+        .answer {
+            font-size: 18px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        button:active {
+            background-color: #397d3b;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Math Question Generator</h1>
+    <div class="question" id="question"></div>
+    <div class="answer">
+        <label for="answer">Your Answer:</label>
+        <input type="number" id="answer">
+    </div>
+    <button onclick="checkAnswer()">Submit</button>
+    <div id="result"></div>
+    <button onclick="generateQuestion()">Generate New Question</button>
+
+    <script>
+        let currentAnswer;
+
+        function generateQuestion() {
+            const num1 = Math.floor(Math.random() * 100);
+            const num2 = Math.floor(Math.random() * 100);
+            const operations = ['+', '-', '*', '/'];
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            let question;
+            switch (operation) {
+                case '+':
+                    question = `${num1} + ${num2}`;
+                    currentAnswer = num1 + num2;
+                    break;
+                case '-':
+                    question = `${num1} - ${num2}`;
+                    currentAnswer = num1 - num2;
+                    break;
+                case '*':
+                    question = `${num1} * ${num2}`;
+                    currentAnswer = num1 * num2;
+                    break;
+                case '/':
+                    question = `${num1} / ${num2}`;
+                    currentAnswer = (num1 / num2).toFixed(2); // limiting to 2 decimal places
+                    break;
+            }
+            document.getElementById('question').innerText = question;
+            document.getElementById('result').innerText = '';
+            document.getElementById('answer').value = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseFloat(document.getElementById('answer').value);
+            if (userAnswer === parseFloat(currentAnswer)) {
+                document.getElementById('result').innerText = 'Correct!';
+            } else {
+                document.getElementById('result').innerText = `Incorrect. The correct answer is ${currentAnswer}.`;
+            }
+        }
+
+        window.onload = generateQuestion;
+    </script>
+</body>
+</html>
