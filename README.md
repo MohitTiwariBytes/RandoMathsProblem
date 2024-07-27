@@ -1,1 +1,1 @@
-A simple HTML/JS/CSS starter template
+A very simple random maths problem generator created in HTML
